@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Surprise</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+
+    body {
+        margin: 0;
+        padding: 0;
+        display: flexl;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        font-family: 'Great Vibes', cursive;
+        overflow: hidden;
+    }
+
+    message {
+        font-size: 40em;
+        color: #6D214F;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 2s;
+        text-align: center;
+        width: 100%;
+    }
+
+    @keyframes float {
+        0% {
+            transform: translateY(0px);
+        }
+        50% {
+            transform: translateY(-20px);
+        }
+        100% {
+            transform: translateY(0px);
+        }
+    }
+
+    .heart {
+        width: 30px;
+        height: 30px;
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="%23ff69b4" d="M462.3 62.7c-54.5-54.5-143.6-54.5-198.2 0L256 70.8l-8.1-8.1c-54.6-54.5-143.7-54.5-198.2 0-54.5 54.5-54.5 143.6 0 198.2l198.2 198.2 8.1 8.1 8.1-8.1 198.2-198.2c54.5-54.6 54.5-143.7 0-198.2zM256 448L256 448 256 448 256 448z"/></svg>');
+        background-size: contain;
+        position: absolute;
+        animation: float 4s ease-in-out infinite;
+    }
+
+    .heart:nth-child(1) {top: 10%; left: 20%; animation-delay: 0s;}
+    .heart:nth-child(2) {top: 30%; left: 40%; animation-delay: -2s;}
+    .heart:nth-child(3) {top: 50%; left: 30%; animation-delay: -4s;}
+    .heart:nth-child(4) {top: 70%; left: 20%; animation-delay: -3s;}
+    .heart:nth-child(5) {top: 80%; left: 50%; animation-delay: -5s;}
+</style>
+</head>
+
+<body>
+    <div id="message">我想你了</div>
+
+    <div class="heart"></div>
+    <div class="heart"></div>
+    <div class="heart"></div>
+    <div class="heart"></div>
+    <div class="heart"></div>
+
+    <script>
+        window.onload = function(){
+            const message = document.getElementById('message');
+            message.style.opacity = 1;
+            message.style.transform = 'translateY(0)';
+        }
+    </script>
+</body>
+</html>
