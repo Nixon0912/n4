@@ -24,18 +24,16 @@
         color: #6D214F;
         opacity: 0;
         transition: all 2s;
+        text-shadow:2px 2px 4px #000000 ;
+        position: relative;
+        white-space: nowrap;
+        overflow: hidden;
     }
 
-    @keyframes float {
-        0% {
-            transform: translateY(0px);
-        }
-        50% {
-            transform: translateY(-20px);
-        }
-        100% {
-            transform: translateY(0px);
-        }
+    #message:hover{
+        color: #ff69b4;
+        text-shadow: 0 0 10px #ff69b4, 0 0 20px #ff69b4, 0 0 30px #ff69b4;
+
     }
 
     .heart {
@@ -44,17 +42,7 @@
         background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="%23ff69b4" d="M462.3 62.7c-54.5-54.5-143.6-54.5-198.2 0L256 70.8l-8.1-8.1c-54.6-54.5-143.7-54.5-198.2 0-54.5 54.5-54.5 143.6 0 198.2l198.2 198.2 8.1 8.1 8.1-8.1 198.2-198.2c54.5-54.6 54.5-143.7 0-198.2zM256 448L256 448 256 448 256 448z"/></svg>');
         background-size: contain;
         position: absolute;
-        animation: float 4s ease-in-out infinite;
         opacity: 0.5;
-    }
-    .heart:nth-child(odd) {
-        left: 20%;
-        animation-delay: 0s;
-    }
-    
-    .heart:nth-child(even) {
-        right: 20%;
-        animation-delay: -2s;
     }
 </style>
 </head>
@@ -62,15 +50,73 @@
 <body>
     <div id="message">我想你了</div>
 
-    <div class="heart"></div>
-    <div class="heart"></div>
+    <div class="heart" id="heart1"></div>
+    <div class="heart" id="heart2"></div>
+    <div class="heart" id="heart3"></div>
+    <div class="heart" id="heart4"></div>
+    <div class="heart" id="heart5"></div>
+    <div class="heart" id="heart6"></div>
+    <div class="heart" id="heart7"></div>
+    <div class="heart" id="heart8"></div>
+    <div class="heart" id="heart9"></div>
+    <div class="heart" id="heart10"></div>
 
     <script>
-        window.onload = function(){
-            const message = document.getElementById('message');
-            message.style.opacity = 1;
-            message.style.transform = 'translateY(0)';
+        document.addEventListener('DOMContentLoaded', () => {
+            const hearts = document.querySelectorAll('.heart');
+            let heartInfo = [];
+
+        hearts.forEach((heart, index) => {
+            let dx = Math.random() * 4 - 2;
+            let dy = Math.random() * 4 - 2;
+            let x = Math.random() * (window.innerWidth - 60);
+            let y = Math.random() * (window.innerHeight - 60);
+
+            heartInfo.push({ dx, dy, x, y, element: heart });
+
+            moveHeart(index);
+        });
+
+        function moveHeart(index) {
+            let info = heartInfo[index];
+
+            info.x += info.dx;
+            info.y += info.dy;
+
+            if (info.x <= 0 || info.x >= window.innerWidth - 60) {
+                info.dx *= -1;
+            }
+            if (info.y <= 0 || info.y >= window.innerHeight - 60) {
+                info.dy *= -1;
+            }
+
+            info.element.style.left = info.x + 'px';
+            info.element.style.top = info.y + 'px';
+
+            requestAnimationFrame(() => moveHeart(index));
         }
+    });
+
+    window.onload = function() {
+        const message = document.getElementById('message');
+        const text = message.textContent;
+        message.textContent = '';
+        message.style.opacity = 1;
+        message.style.transform = 'translateY(0)';
+
+        let i = 0;
+        const typingSpead = 500;
+
+        function typeWriter() {
+            if (i < text.length) {
+                message.textContent += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, typingSpead);
+            }
+        }
+        setTimeout(typeWriter, typingSpead);
+    };
+
     </script>
 </body>
 </html>
