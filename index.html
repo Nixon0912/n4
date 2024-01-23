@@ -43,6 +43,16 @@
         background-size: contain;
         position: absolute;
         opacity: 0.5;
+        animation: float 4s ease-in-out infinite, rotate 5s linear infinite;
+    }
+
+    @keyframes rotate {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate (360deg);
+        }
     }
 </style>
 </head>
@@ -72,7 +82,10 @@
             let x = Math.random() * (window.innerWidth - 60);
             let y = Math.random() * (window.innerHeight - 60);
 
-            heartInfo.push({ dx, dy, x, y, element: heart });
+            let rotationSpeed = Math.random() * 2 + 1;
+            let rotationDirection = Math.random() < 0.5 ? -1 : 1;
+
+            heartInfo.push({ dx, dy, x, y, element: heart, rotationSpeed, rotation: 0, rotationDirection });
 
             moveHeart(index);
         });
@@ -83,6 +96,11 @@
             info.x += info.dx;
             info.y += info.dy;
 
+            info.rotation += info.rotationSpeed * info.rotationDirection;
+            if (info.rotation > 60 || info.rotation < -60) {
+                info.rotationDirection *= -1;
+            }
+
             if (info.x <= 0 || info.x >= window.innerWidth - 60) {
                 info.dx *= -1;
             }
@@ -92,6 +110,7 @@
 
             info.element.style.left = info.x + 'px';
             info.element.style.top = info.y + 'px';
+            info.element.style.transform = `rotate(${info.rotation}deg)`;
 
             requestAnimationFrame(() => moveHeart(index));
         }
